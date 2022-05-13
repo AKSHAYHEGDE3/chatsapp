@@ -1,0 +1,65 @@
+.profile{
+    background-color: #f0f2f5;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 2%;
+}
+
+.profile img,.friendImg img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px; 
+    object-fit: cover;
+}
+
+.search{
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.search input{
+    color: #818f98;
+    background-color: #f0f2f5;
+    height: 70%;
+    width: 90%;
+    border: 0;
+    margin: 0.44% auto;
+    padding: 0 1%;
+}
+
+.searchFriend{
+    background-color: #00a884;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.friendCard{
+    height: 60px;
+    display: flex;
+    border-bottom: 1px solid #f0f2f5;
+    padding: 0.5% 2%;
+    align-items: center;
+}
+
+.friendImg{
+    width: 10%;
+    
+}
+
+.logout{
+    margin-left: auto;
+}
+
+.searchCardBtn{
+    color: #00a884;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.8%;
+    text-align: center;
+    margin-left: auto;
+    border: 0;
+    font-size: 1.2rem;
+}
+
