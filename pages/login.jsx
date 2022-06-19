@@ -51,7 +51,7 @@ function Login() {
                     <Link href="/">Forgot Password</Link>
                 </div>
                 <div>
-                    Don't have an account? <Link href="/register"><span style={{color:'blue',textDecoration:'underline',cursor:'pointer'}}>Register</span></Link> now.
+                    Don&apos;t have an account? <Link href="/register"><span style={{color:'blue',textDecoration:'underline',cursor:'pointer'}}>Register</span></Link> now.
                 </div>
             </div>
         </div>
