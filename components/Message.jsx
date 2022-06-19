@@ -3,9 +3,10 @@ import styles from '../styles/message.module.css'
 import moment from "moment"
 import timeSince from './helperFunction'
 
-const Message = ({ data, user, }) => {
+const Message = ({ data, user }) => {
 
     // console.log(moment(data.createdAt.toDate()).format('LT'))
+    
 
     return (
         <div>
@@ -18,7 +19,6 @@ const Message = ({ data, user, }) => {
                                 <span className={styles.message}>
                                     {data.text}
                                 </span>
-
                             </div>
                         </div>
                     </div> :

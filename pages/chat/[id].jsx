@@ -59,7 +59,7 @@ export async function getServerSideProps(context){
           ...message,createdAt:message.createdAt.toDate().getTime()
       }
   ))
-  console.log(messages)
+  // console.log(messages)
   
   
   return {

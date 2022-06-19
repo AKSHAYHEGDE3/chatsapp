@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from '../styles/chatpg.module.css'
 import SendIcon from '@mui/icons-material/Send';
 import { addDoc, auth, collection, db, doc, query, where, getDocs } from '../firebase';
@@ -20,8 +20,12 @@ const Chatpg = ({ messages, chat, id }) => {
     const [friendInfo, setFriendInfo] = useState(null)
     const chatRef = doc(db, 'chats', id)
     const msgRef = query(collection(chatRef, "messages"), orderBy("createdAt", "asc"))
+    const scrollRef = useRef(null)
 
-
+    function scrollToBottom (){
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth',block:'start'})
+        console.log('run')
+    }
     useEffect(() => {
         const fetchFriend = async () => {
             const friend = chat.users?.filter(u => u !== user?.email)[0];
@@ -29,6 +33,7 @@ const Chatpg = ({ messages, chat, id }) => {
             const ref = query(collection(db, "users"), where("email", "==", friend))
             const res = await getDocs(ref)
             setFriendInfo(res.docs[0].data())
+            scrollToBottom()
         }
         fetchFriend();
 
@@ -38,11 +43,17 @@ const Chatpg = ({ messages, chat, id }) => {
         const unsub = onSnapshot(msgRef, (doc) => {
             // doc.docs.map(d=>console.log(d.data().createdAt.seconds.todate()))
             setMessages(doc)
+            console.log('run')
+            scrollToBottom()
         })
         return () => {
             unsub()
         };
     }, [chat]);
+
+    useEffect(()=>{
+        scrollToBottom()
+    },[messages,Messages])
 
     const sendMessage = async (e) => {
         await addDoc(collection(chatRef, "messages"), {
@@ -51,13 +62,13 @@ const Chatpg = ({ messages, chat, id }) => {
             to: chat.users?.filter(u => u !== user?.email)[0],
             createdAt: Timestamp.now()
         });
+        scrollToBottom()
 
     }
-
-    messages.map(m => console.log(moment(m.createdAt).format('LT')))
+ 
     const showMessages = () => {
         if (Messages) {
-            return Messages.docs?.map(msg => <Message key={msg.id} data={{ ...msg.data(), createdAt: msg.createdAt?.toDate().getTime() }} user={user} />)
+            return Messages.docs?.map(msg => <Message key={msg.id} data={{ ...msg.data(), createdAt: msg.data().createdAt?.toDate().getTime() }} user={user} />)
         }
         else {
             return messages.map(msg => <Message key={msg.id} data={msg} user={user} />)
@@ -65,7 +76,7 @@ const Chatpg = ({ messages, chat, id }) => {
         // return Messages?.docs?.map(msg => <Message key={msg.id} data={msg.data()} user={user} />)
     }
 
-
+    console.log(scrollRef)
 
     return (
         <div className={styles.chatPg}>
@@ -79,6 +90,7 @@ const Chatpg = ({ messages, chat, id }) => {
             </div>
             <div className={styles.chatScreen}>
                 {showMessages()}
+                <div ref={scrollRef}></div>
             </div>
             <div className={styles.chatFooter}>
                 <input onChange={e => setText(e.target.value)} value={text} className={styles.msgInput} type="text" placeholder='Type a message' />
