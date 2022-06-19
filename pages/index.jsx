@@ -14,10 +14,6 @@ import Navbar from '../components/Navbar';
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
 
-  if(loading){
-    return <h1>Loading ...</h1>
-  }
-
   return (
     <div className={styles.container}>
       <Head>
@@ -27,10 +23,6 @@ export default function Home() {
       </Head>
       <Navbar />
       <SideBar />
-      
-
-
-
     </div>
   )
 }

@@ -41,11 +41,18 @@
     border-bottom: 1px solid #f0f2f5;
     padding: 0.5% 2%;
     align-items: center;
+    cursor: pointer;
 }
 
-.friendImg{
-    width: 10%;
-    
+.friendCard:hover{
+    background-color: #f5f6f6;
+}
+
+
+.name{
+    font-size: 1.5rem;
+    margin-left: 2%;
+    font-weight: bold;
 }
 
 .logout{
@@ -63,3 +70,39 @@
     font-size: 1.2rem;
 }
 
+.avatar{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px; 
+    margin-right: 2%;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cards{
+    height: calc(90vh - 60px);
+    max-height: calc(89vh - 60px);
+    overflow-y: scroll;
+}
+
+.cards::-webkit-scrollbar
+{
+	width: 10px;
+
+}
+
+.cards::-webkit-scrollbar-thumb
+{
+	background-color: #c4c3bf;
+
+}
+
+@media screen and (max-width:1000px) {
+    .profile .name{
+        font-size: 1rem;
+    }
+}

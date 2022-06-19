@@ -7,6 +7,9 @@ import { Timestamp, onSnapshot, orderBy } from 'firebase/firestore';
 import timeSince from './helperFunction';
 import Message from './Message';
 import moment from "moment"
+import Avatar from './Avatar';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from "next/link";
 
 
 const Chatpg = ({ messages, chat, id }) => {
@@ -22,7 +25,7 @@ const Chatpg = ({ messages, chat, id }) => {
     useEffect(() => {
         const fetchFriend = async () => {
             const friend = chat.users?.filter(u => u !== user?.email)[0];
-            console.log(friend)
+            // console.log(friend)
             const ref = query(collection(db, "users"), where("email", "==", friend))
             const res = await getDocs(ref)
             setFriendInfo(res.docs[0].data())
@@ -32,14 +35,14 @@ const Chatpg = ({ messages, chat, id }) => {
     }, [chat])
 
     useEffect(() => {
-        const unsub= onSnapshot(msgRef,(doc)=>{
+        const unsub = onSnapshot(msgRef, (doc) => {
             // doc.docs.map(d=>console.log(d.data().createdAt.seconds.todate()))
-           setMessages(doc)
-           })
+            setMessages(doc)
+        })
         return () => {
-        unsub()
+            unsub()
         };
-      }, [chat]);
+    }, [chat]);
 
     const sendMessage = async (e) => {
         await addDoc(collection(chatRef, "messages"), {
@@ -51,13 +54,13 @@ const Chatpg = ({ messages, chat, id }) => {
 
     }
 
-    messages.map(m=>console.log(moment(m.createdAt).format('LT')))
+    messages.map(m => console.log(moment(m.createdAt).format('LT')))
     const showMessages = () => {
         if (Messages) {
-            return Messages.docs?.map(msg => <Message key={msg.id} data={{...msg.data(),createdAt:msg.createdAt?.toDate().getTime()}} user={user} />)
+            return Messages.docs?.map(msg => <Message key={msg.id} data={{ ...msg.data(), createdAt: msg.createdAt?.toDate().getTime() }} user={user} />)
         }
         else {
-            return messages.map(msg => <Message key={msg.id} data={msg} user={user}  />)
+            return messages.map(msg => <Message key={msg.id} data={msg} user={user} />)
         }
         // return Messages?.docs?.map(msg => <Message key={msg.id} data={msg.data()} user={user} />)
     }
@@ -67,20 +70,19 @@ const Chatpg = ({ messages, chat, id }) => {
     return (
         <div className={styles.chatPg}>
             <div className={styles.chatProfile}>
-                <div className={styles.friendImg}>
-                    <img src="/luffy.webp" alt="" />
-                </div>
+                <Link href="/"><ArrowBackIcon className={styles.arrowBack} /></Link>
+                <Avatar name={friendInfo?.email.slice(0, 2).toUpperCase()} />
                 <div className={styles.friendInfo}>
                     <p style={{ marginBottom: 0, marginTop: 0 }}>{friendInfo?.name}</p>
                     <p style={{ marginBottom: 0, marginTop: 0, opacity: 0.7 }}>lastseen : {timeSince(friendInfo?.lastseen.toDate())} ago </p>
                 </div>
             </div>
             <div className={styles.chatScreen}>
-               {showMessages()}
+                {showMessages()}
             </div>
             <div className={styles.chatFooter}>
                 <input onChange={e => setText(e.target.value)} value={text} className={styles.msgInput} type="text" placeholder='Type a message' />
-                <button style={{border:'none'}} onClick={(e) => { sendMessage(e); setText('') }} disabled={!text}><SendIcon className={styles.sendIcon} /></button>
+                <button style={{ border: 'none' }} onClick={(e) => { sendMessage(e); setText('') }} disabled={!text}><SendIcon className={styles.sendIcon} /></button>
             </div>
         </div>
     )

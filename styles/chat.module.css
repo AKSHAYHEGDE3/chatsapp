@@ -12,3 +12,11 @@
     width: 70%;
 }
 
+@media (max-width:770px){
+    .side{
+        display: none;
+    }
+    .mainChat{
+        width: 100%;
+    }
+}

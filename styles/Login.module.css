@@ -31,3 +31,9 @@
   .login div {
     margin-top: 7px;
   }
+
+  .whatsappImg{
+    height:100px;
+    width:100px;
+    margin: 0 auto 2% auto;
+  }

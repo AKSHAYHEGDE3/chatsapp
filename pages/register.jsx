@@ -28,6 +28,7 @@ function Register() {
   return (
     <div className={styles.login}>
       <div className={styles.login__container}>
+      <img className={styles.whatsappImg} src="/WhatsApp.png" alt="" />
       <input
           type="text"
           className={styles.login__textBox}
@@ -57,7 +58,7 @@ function Register() {
         </button>
         
         <div>
-          Already have an account? <Link href="/login">Login</Link> now.
+          Already have an account? <Link href="/login"><span style={{color:'blue',textDecoration:'underline',cursor:'pointer'}}>Login</span></Link> now.
         </div>
       </div>
     </div>

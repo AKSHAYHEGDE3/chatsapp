@@ -26,6 +26,7 @@ function Login() {
     return (
         <div className={styles.login}>
             <div className={styles.login__container}>
+                <img className={styles.whatsappImg} src="/WhatsApp.png" alt="" />
                 <input
                     type="text"
                     className={styles.login__textBox}
@@ -50,7 +51,7 @@ function Login() {
                     <Link href="/">Forgot Password</Link>
                 </div>
                 <div>
-                    Don't have an account? <Link href="/register">Register</Link> now.
+                    Don't have an account? <Link href="/register"><span style={{color:'blue',textDecoration:'underline',cursor:'pointer'}}>Register</span></Link> now.
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import Router from 'next/router';
 import React from 'react'
 import styles from '../styles/Sidebar.module.css'
+import Avatar from './Avatar';
 
 const FriendCard = ({data,user,id}) => {
 
@@ -13,14 +14,11 @@ const FriendCard = ({data,user,id}) => {
     function letsChat(){
         Router.push(`/chat/${id}`)
     }
-
     return (
 
         <div onClick={letsChat} className={styles.friendCard}>
-            <div className={styles.friendImg}>
-                <img src="/luffy.webp" alt="" />
-            </div>
-            <p>{friend}</p>
+            <Avatar name={friend.slice(0,2).toUpperCase()}/>
+            <p style={{marginLeft:'2%'}}>{friend}</p>
         </div>
 
     )

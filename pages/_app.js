@@ -12,9 +12,10 @@ import { useState } from 'react'
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const au = getAuth()
-  // console.log(user)
+
 
   useEffect(() => {
+  
     if (!user) {
       Router.push('/login')
     }
@@ -32,7 +33,7 @@ function MyApp({ Component, pageProps }) {
 
   }, [user])
 
-
+  if(loading) return <h1>Loading ... </h1>
   return <Component {...pageProps} />
 }
 
