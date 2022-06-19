@@ -1,0 +1,52 @@
+.msg{
+    width:100%;
+    height:auto;
+    display:block;
+    overflow:hidden;
+}
+
+.bubble{
+    float:left;
+    max-width: 70%;
+    min-width: 10%;
+    width: auto;    
+    height: auto;
+    display: block;
+    background: #ffffff;
+    border-radius: 5px;
+    position: relative;
+    margin: 10px 0 3px 25px;   
+    box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.msg .my{
+    background:#DCF8C6; 
+    float:right;
+    margin: 10px 25px 3px 0px;
+}
+.follow{
+    margin: 2px 0 3px 25px;
+}
+
+.txt{
+    padding: 8px 5px 8px 0;
+    width:100%;
+}
+
+.message{
+    font-size: 14px;
+    font-weight:500;
+    padding: 0 15px 0 15px;
+    color: #2b2b2b;
+    display: table;
+    margin: 0 0 0 0;
+}
+
+
+.timestamp{
+    float: right;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 0;
+}
+

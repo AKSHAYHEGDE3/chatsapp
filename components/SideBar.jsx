@@ -7,6 +7,10 @@ import { getAllUsers } from '../firebase.js'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, where, query, collection, setDoc, doc, addDoc, getDocs } from "../firebase.js";
 import { useCollection } from "react-firebase-hooks/firestore";
+import FriendCard from './FriendCard';
+import Link from "next/link";
+import SearchCard from './SearchCard';
+import { queryEqual } from 'firebase/firestore';
 
 
 const SideBar = () => {
@@ -15,26 +19,35 @@ const SideBar = () => {
     const [users, setUsers] = useState(null)
     const [search, setSearch] = useState('')
     const [searchList, setSearchList] = useState([])
-    const [chats, setChats] = useState(null)
+    const [chats, setChats] = useState([])
+
+    // useEffect(() => {
+    //     if (!user) {
+    //         Router.push('/login')
+    //       }
+    // },[])
+
+    // console.log(user)
 
     useEffect(
         () => {
             const getUsers = async () => {
                 const res = await getAllUsers()
-                console.log(res)
+                // console.log(res)
                 setUsers(res)
             };
             getUsers();
-            const getChats = async () => {
+            const getChatsLists = async () => {
+                // console.log(user)
                 const userChatRef = query(collection(db, "chats"), where("users", "array-contains", user?.email));
                 const querySnapshot = await getDocs(userChatRef);
                 // querySnapshot.forEach((doc) => {
                 //     console.log(doc.id, " => ", doc.data());
                 // });
-                setChats(querySnapshot)
+                setChats(querySnapshot.docs)
 
             }
-            getChats();
+            user && getChatsLists() ;
         }, [user])
 
     const searchUser = (e) => {
@@ -45,31 +58,33 @@ const SideBar = () => {
         //console.log(searchLists);
     }
 
-    const startChat = async (friend) => {
-        console.log(!checkIfChatExist(friend))
-        if (!checkIfChatExist(friend)) {
-            console.log('run');
-            await addDoc(collection(db, "chats"), {
-                users: [user.email, friend]
-            });
-        }
-
-    }
-
     const checkIfChatExist = (friend) => {
-        return !!chats?.docs.find(
+        return !!chats?.find(
             chat => chat.data().users.find(
                 user => user === friend
             )?.length > 0
         )
     }
 
-    
+    const startChat = async (friend) => {
+        console.log(!checkIfChatExist(friend))
+        if (!checkIfChatExist(friend)) {
+            console.log('run');
+           const docref = await addDoc(collection(db, "chats"), {
+                users: [user.email, friend],
+            });
+            // console.log(docref.id)
+        }
+        setSearch('')
 
+    }
+
+    
+    
     return (
         <div className={styles.sidebar}>
             <div className={styles.profile}>
-                <img src="luffy.webp" alt="" />
+                <img src="/luffy.webp" alt="" />
                 <LogoutIcon onClick={() => logout()} className={styles.logout} />
             </div>
             <div className={styles.search}>
@@ -80,15 +95,7 @@ const SideBar = () => {
                     <div className={styles.searchFriend}>
                         {
                             searchList?.map(user => {
-                                return <>
-                                    <div className={styles.friendCard}>
-                                        <div className={styles.friendImg}>
-                                            <img src="luffy.webp" alt="" />
-                                        </div>
-                                        <p style={{ color: 'white' }}>{user.email}</p>
-                                        <button onClick={() => startChat(user.email)} className={styles.searchCardBtn}>Chat</button>
-                                    </div>
-                                </>
+                                return <SearchCard key={user.uid} user={user} startChat={startChat} id={card.id} />
                             })
                         }
 
@@ -96,15 +103,16 @@ const SideBar = () => {
             }
             {
                 (search.length < 1) ?
-                    <div className={styles.friendCard}>
-                        <div className={styles.friendImg}>
-                            <img src="luffy.webp" alt="" />
-                        </div>
-                        <p>Name</p>
-                    </div> : ''
+                        chats?.map((card)=>{
+                            return <FriendCard key={card.id} data={card.data()} id={card.id} user={user}  />
+                        })
+                    : ''
             }
+           
         </div>
     )
 }
 
 export default SideBar
+
+

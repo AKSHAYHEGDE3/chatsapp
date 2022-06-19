@@ -1,0 +1,14 @@
+.chatContainer{
+    display: flex;
+    height: 95vh;
+}
+
+.side{
+    width: 35%;
+    border-right: 1px solid lightgrey;
+}
+
+.mainChat{
+    width: 70%;
+}
+

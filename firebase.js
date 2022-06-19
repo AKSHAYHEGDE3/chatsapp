@@ -13,7 +13,7 @@ import {
     getDocs,
     collection,
     where,
-    addDoc,
+    addDoc,useCollection
 } from "firebase/firestore";
 
 
@@ -37,7 +37,7 @@ const signinWithEmailAndPassword = async (email, password) => {
     try {
         const res = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         const error = err.message;
         return error;
     }
@@ -48,7 +48,7 @@ const getAllUsers = async () => {
     const querySnapshot = await getDocs(collection(db, "users"));
     //console.log(querySnapshot)
     querySnapshot.forEach(doc => {
-        console.log(doc.data());
+        // console.log(doc.data());
         users = users.concat(doc.data());
         
     })
@@ -69,7 +69,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
         });
 
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         alert(err.message);
 
     }
@@ -80,7 +80,7 @@ const sendPasswordReset = async (email) => {
         await sendPasswordResetEmail(auth, email);
         alert("Password reset link sent!");
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         alert(err.message);
     }
 };
@@ -91,7 +91,7 @@ const logout = () => {
 
 export {
     auth,
-    db,collection,where,query,setDoc,doc,addDoc,getDocs,
+    db,collection,where,query,setDoc,doc,addDoc,getDocs,useCollection,
     signinWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,

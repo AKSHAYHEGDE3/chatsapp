@@ -1,0 +1,62 @@
+.chatPg{
+  
+    max-height: 95vh;
+    
+}
+
+.chatProfile{
+    background-color: #f0f2f5;
+    height: 60px;
+    display: flex;
+    border-bottom: 1px solid #f0f2f5;
+    padding: 0.5% 2%;
+    align-items: center;
+}
+
+.friendImg{
+    width: 10%;
+}
+
+.friendImg img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px; 
+    object-fit: cover;
+}
+
+/* .chatScreen{
+    
+} */
+
+.chatFooter{
+    position: fixed;
+    bottom: 0;
+    background-color: #f0f2f5;
+    height: 60px;
+    width: 70%;
+    display: flex;
+    border-top: 1px solid #f0f2f5;
+    padding: 0.5% 2%;
+    align-items: center;
+}
+
+.msgInput{
+    border: 0;
+    padding: 1%;
+    margin: 0 2% 0 0;
+    width: 70%;
+    border-radius: 1%;
+}
+
+.sendIcon{
+    height: 30px !important;
+    color: blue;
+    
+}
+
+.chatScreen{
+    height: calc(95vh - 60px - 60px);
+    max-height: calc(95vh - 60px - 60px);
+    overflow-y: scroll;
+    background-color: #efeae2;
+}
