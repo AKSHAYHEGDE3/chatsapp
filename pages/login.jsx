@@ -12,8 +12,11 @@ function Login() {
 
     const login = async () => {
        const res = await signinWithEmailAndPassword(email, password)
-      
     }
+
+    const testLogin = async () => {
+        const res = await signinWithEmailAndPassword('akshay@gmail.com', '123456')  
+     }
 
     useEffect(()=>{
         if(user){
@@ -45,6 +48,13 @@ function Login() {
                     className={styles.login__btn}
                     onClick={login}>
                     Login
+                </button>
+                <h4 style={{marginTop:'5%'}}>OR</h4>
+                <button
+                    className={styles.login__btn}
+                    style={{backgroundColor:'red'}}
+                    onClick={testLogin}>
+                    Test Login
                 </button>
 
                 <div>
