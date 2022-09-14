@@ -1,0 +1,18 @@
+.side{
+    width: 35%;
+    border-right: 1px solid lightgrey;
+  }
+  
+  .mainChat{
+    width: 70%;
+  }
+  
+  
+  @media (max-width:770px){
+    .mainChat{
+        display: none;
+    }
+    .side{
+        width: 100%;
+    }
+  }

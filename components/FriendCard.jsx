@@ -3,6 +3,7 @@ import React from 'react'
 import styles from '../styles/Sidebar.module.css'
 import Avatar from './Avatar';
 
+
 const FriendCard = ({data,user,id}) => {
 
     function getRecepient(emails,user){
@@ -16,7 +17,7 @@ const FriendCard = ({data,user,id}) => {
     }
     return (
 
-        <div onClick={letsChat} className={styles.friendCard}>
+        <div onClick={letsChat} className={`${styles.friendCard} ${styles.searchCard}`}>
             <Avatar name={friend.slice(0,2).toUpperCase()}/>
             <p style={{marginLeft:'2%'}}>{friend}</p>
         </div>

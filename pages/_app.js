@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
   
-    if (!user) {
+    if (!user && !loading) {
       Router.push('/login')
     }
     

@@ -21,7 +21,7 @@ const Chat = ({messages,chat}) => {
       <Navbar />
       <div className={styles.chatContainer}>
         <div className={styles.side}>
-          <SideBar />
+          <SideBar type={"chats"} />
         </div>
         <div className={styles.mainChat}>
           <Chatpg chat={JSON.parse(chat)} messages={JSON.parse(messages)} id={router.query.id}/>

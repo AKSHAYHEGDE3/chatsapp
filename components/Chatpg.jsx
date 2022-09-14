@@ -82,7 +82,7 @@ const Chatpg = ({ messages, chat, id }) => {
         <div className={styles.chatPg}>
             <div className={styles.chatProfile}>
                 <Link href="/"><ArrowBackIcon className={styles.arrowBack} /></Link>
-                <Avatar name={friendInfo?.email.slice(0, 2).toUpperCase()} />
+                <Avatar name={friendInfo?.email.slice(0, 2).toUpperCase()} bg={'#ff00ff'} />
                 <div className={styles.friendInfo}>
                     <p style={{ marginBottom: 0, marginTop: 0 }}>{friendInfo?.name}</p>
                     <p style={{ marginBottom: 0, marginTop: 0, opacity: 0.7 }}>lastseen : {timeSince(friendInfo?.lastseen.toDate())} ago </p>

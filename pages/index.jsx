@@ -8,9 +8,6 @@ import Chatpg from '../components/Chatpg';
 import Navbar from '../components/Navbar';
 
 
-
-
-
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
 
@@ -22,7 +19,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <SideBar />
+      <div style={{
+        display: 'flex'
+      }}>
+        <div className={styles.side}>
+          <SideBar type={'chats'} />
+        </div>
+        <div className={styles.mainChat}>
+          <div style={{
+            backgroundColor: "#f0f2f5",
+            height: '95vh',
+            maxHeight: '95vh',
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center'
+          }}>
+            <div>
+              <div>start your chats by clicking on Name</div>
+              <div style={{textAlign:'center'}}>OR</div>
+              <div style={{textAlign:'center'}}>Search your friends using mail</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/Sidebar.module.css'
 
-const Avatar = ({name}) => {
+const Avatar = ({name,bg}) => {
 
     function getDarkColor() {
         var color = '#';
@@ -12,7 +12,7 @@ const Avatar = ({name}) => {
     }
 
   return (
-    <div style={{backgroundColor:getDarkColor()}} className={styles.avatar}>
+    <div style={{backgroundColor:bg?bg:getDarkColor()}} className={styles.avatar}>
         {name}
     </div>
   )
