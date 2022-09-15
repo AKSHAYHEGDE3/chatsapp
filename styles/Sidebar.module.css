@@ -99,7 +99,7 @@
 }
 
 .cards{
-    height: calc(90vh - 60px);
+    height: calc(90vh - 100px);
     max-height: calc(89vh - 60px);
     overflow-y: scroll;
 }

@@ -59,23 +59,21 @@ const SideBar = ({ type }) => {
             }
 
             const getGroupChatsLists = async () => {
-                console.log('run')
                 const userGroupChatRef = query(collection(db, "groupChats"), where("userEmails", "array-contains", user?.email));
                 const querySnapshot = await getDocs(userGroupChatRef);
-                console.log(querySnapshot.docs)
+                // console.log(querySnapshot.docs)
                 let arr = []
                 querySnapshot.docs.map(doc => {
-                    arr = arr.concat({ users: doc.data().users,userEmails:doc.data().userEmails,groupName:doc.data().groupName,id: doc.id })
+                    arr = arr.concat({ users: doc.data().users, userEmails: doc.data().userEmails, groupName: doc.data().groupName, id: doc.id })
                 })
                 setGroupChats(arr);
             }
 
             user && getChatsLists();
             user && getGroupChatsLists();
-            
+
         }, [user])
 
-    console.log(groupChats)
 
     const searchUser = (e) => {
         setAlredyExist('')
@@ -180,14 +178,23 @@ const SideBar = ({ type }) => {
                         <div style={{ marginTop: '4%', textAlign: 'center' }}>
                             <img src="/loader.gif" alt="" />
                         </div> :
-                        (search.length < 1) ?
-                            chats.length >= 1 ?
-                                chats?.map((card) => {
-                                    return <FriendCard key={card.id} data={card} id={card.id} user={user} />
+                        type === 'chats' ?
+                            (search.length < 1) ?
+                                chats.length >= 1 ?
+                                    chats?.map((card) => {
+                                        return <FriendCard key={card.id} type={type} data={card} id={card.id} user={user} />
+                                    }) : <div style={{ marginTop: '4%', textAlign: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                        <p>To start a conversation search your friends</p>
+                                    </div>
+                                :
+                                ''
+                            :
+                            groupChats.length >= 1 ?
+                            groupChats?.map((card) => {
+                                    return <FriendCard key={card.id} type={type} data={card} id={card.id} user={user} />
                                 }) : <div style={{ marginTop: '4%', textAlign: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
-                                    <p>To start a conversation search your friends</p>
+                                    <p>No Groups! Create One</p>
                                 </div>
-                            : ''
                 }
             </div>
             <GroupModal

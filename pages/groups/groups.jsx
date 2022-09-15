@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import SideBar from '../../components/SideBar'
-import styles from "../../styles/groups.module.css"
+import styles from "../../styles/Home.module.css"
 
 const Groups = () => {
     return (
@@ -10,13 +10,13 @@ const Groups = () => {
             <div style={{
                 display: 'flex'
             }}>
-                <div className={styles.side}>
+                <div style={{maxHeight:'95vh',height:'95vh'}} className={styles.side}>
                     <SideBar type={"groups"} />
                 </div>
                 <div className={styles.mainChat}>
                     <div style={{
                         backgroundColor: "#f0f2f5",
-                        height: '95vh',
+                        height: '93vh',
                         maxHeight: '95vh',
                         display: 'flex',
                         alignItems: 'center',
