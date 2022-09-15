@@ -6,38 +6,23 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Timestamp, onSnapshot, orderBy } from 'firebase/firestore';
 import timeSince from './helperFunction';
 import Message from './Message';
-import moment from "moment"
 import Avatar from './Avatar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from "next/link";
 
 
-const Chatpg = ({ messages, chat, id }) => {
+const GroupChatPg = ({ messages, chat, id }) => {
 
     const [user, loading, error] = useAuthState(auth);
     const [Messages, setMessages] = useState(null)
     const [text, setText] = useState('')
-    const [friendInfo, setFriendInfo] = useState(null)
-    const chatRef = doc(db, 'chats', id)
+    const chatRef = doc(db, 'groupChats', id)
     const msgRef = query(collection(chatRef, "messages"), orderBy("createdAt", "asc"))
     const scrollRef = useRef(null)
 
-    function scrollToBottom (){
-        scrollRef.current?.scrollIntoView({ behavior: 'smooth',block:'start'})
-        console.log('run')
+    function scrollToBottom() {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-    useEffect(() => {
-        const fetchFriend = async () => {
-            const friend = chat.users?.filter(u => u !== user?.email)[0];
-            // console.log(friend)
-            const ref = query(collection(db, "users"), where("email", "==", friend))
-            const res = await getDocs(ref)
-            setFriendInfo(res.docs[0].data())
-            scrollToBottom()
-        }
-        fetchFriend();
-
-    }, [chat])
 
     useEffect(() => {
         const unsub = onSnapshot(msgRef, (doc) => {
@@ -51,41 +36,47 @@ const Chatpg = ({ messages, chat, id }) => {
         };
     }, [chat]);
 
-    useEffect(()=>{
+    useEffect(() => {
         scrollToBottom()
-    },[messages,Messages])
+    }, [messages, Messages])
 
     const sendMessage = async (e) => {
         await addDoc(collection(chatRef, "messages"), {
             text: text,
-            from: user.email,
-            to: chat.users?.filter(u => u !== user?.email)[0],
+            from: chat.users.filter(u => u.email === user?.email)[0],
+            to: chat.users.filter(u => u.email !== user?.email),
             createdAt: Timestamp.now()
         });
         scrollToBottom()
 
     }
- 
+
     const showMessages = () => {
         if (Messages) {
-            return Messages.docs?.map(msg => <Message type={'chats'} key={msg.id} data={{ ...msg.data(), createdAt: msg.data().createdAt?.toDate().getTime() }} user={user} />)
+            return Messages.docs?.map(msg => <Message type={'groups'} key={msg.id} data={{ ...msg.data(), createdAt: msg.data().createdAt?.toDate().getTime() }} user={user} />)
         }
         else {
-            return messages.map(msg => <Message type={'chats'} key={msg.id} data={msg} user={user} />)
+            return messages.map(msg => <Message type={'groups'} key={msg.id} data={msg} user={user} />)
         }
         // return Messages?.docs?.map(msg => <Message key={msg.id} data={msg.data()} user={user} />)
     }
 
-    
+
 
     return (
         <div className={styles.chatPg}>
             <div className={styles.chatProfile}>
                 <Link href="/"><ArrowBackIcon className={styles.arrowBack} /></Link>
-                <Avatar name={friendInfo?.email.slice(0, 2).toUpperCase()} bg={'#ff00ff'} />
+                <Avatar name={chat.groupName.slice(0, 2).toUpperCase()} bg={'#ff00ff'} />
                 <div className={styles.friendInfo}>
-                    <p style={{ marginBottom: 0, marginTop: 0 }}>{friendInfo?.name}</p>
-                    <p style={{ marginBottom: 0, marginTop: 0, opacity: 0.7 }}>lastseen : {timeSince(friendInfo?.lastseen.toDate())} ago </p>
+                    <p style={{ marginBottom: 0, marginTop: 0,fontWeight:'bold' }}>{chat.groupName}</p>
+                    <p style={{ marginBottom: 0, marginTop: 0, opacity: 0.7,fontSize:'0.8rem' }}>
+                        {
+                            chat.users.filter(u => u !== user?.email).map((user)=>{
+                                return `${user.name},`
+                            })
+                        }
+                    </p>
                 </div>
             </div>
             <div className={styles.chatScreen}>
@@ -100,4 +91,4 @@ const Chatpg = ({ messages, chat, id }) => {
     )
 }
 
-export default Chatpg
+export default GroupChatPg
