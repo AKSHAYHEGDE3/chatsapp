@@ -11,6 +11,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '70%',
+    maxHeight:'70vh',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -103,7 +104,7 @@ const GroupModal = ({
                                 </div> : ''
                         }
                         <Button onClick={createGroup}
-                         disabled={!(addMembers.length > 1 && (grpName!==null && grpName!==''))} 
+                         disabled={!(addMembers.length >= 1 && (grpName!==null && grpName!==''))} 
                          style={{ backgroundColor: 'red', margin: '2%', marginLeft: '70%' }} variant="contained">
                             Create Group
                         </Button>
